@@ -20,11 +20,10 @@ struct Book {
 impl Book {
     fn new(title: String, author: String) -> Self {
         Book.title = title;
-        Book.author = author;
     }
 
     fn check_out(&mut self, days: i32) {
-        
+        BookStatus::CheckedOut(days);
     }
 
     fn return_book(&mut self) {
@@ -40,7 +39,7 @@ impl Book {
     }
 
     fn report_lost(&mut self) {
-        todo();
+        //todo();
     }
 
     fn display_status(&self) -> String {
