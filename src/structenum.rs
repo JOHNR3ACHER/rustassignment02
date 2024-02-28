@@ -46,10 +46,10 @@ impl Book {
         match &self.status {
             BookStatus::Available => format!("{} is available for borrowing.", self.title),
             // keep covering cases
-            BookStatus::CheckedOut => format!("is checked out. Days until due: {}", self.),
+            BookStatus::CheckedOut(x) => format!("is checked out. Days until due: {}", x),
             BookStatus::BeingRead => format!("{} is currently being read.", self.title),
-            BookStatus::InRepair => format!("{} is available for borrowing.", self.title),
-            BookStatus::Lost => format!("{} is available for borrowing.", self.title),
+            BookStatus::InRepair(x) => format!("is in repair. Notes: {}", x),
+            BookStatus::Lost => format!("{} has been reported lost.", self.title),
            
 
 
@@ -100,28 +100,28 @@ mod tests {
         assert_eq!(book.status, BookStatus::Lost);
     }
 
-    // #[test]
-    // fn display_status_for_each_case() {
-    //     let available_book = Book::new("Rust Programming".to_string(), "John Doe".to_string());
-    //     assert_eq!(available_book.display_status(), "Rust Programming is available for borrowing.");
+    #[test]
+    fn display_status_for_each_case() {
+        let available_book = Book::new("Rust Programming".to_string(), "John Doe".to_string());
+        assert_eq!(available_book.display_status(), "Rust Programming is available for borrowing.");
 
-    //     let mut checked_out_book = Book::new("Learning Rust".to_string(), "Jane Smith".to_string());
-    //     checked_out_book.check_out(14);
-    //     assert!(checked_out_book.display_status().contains("is checked out. Days until due: 14"));
+        let mut checked_out_book = Book::new("Learning Rust".to_string(), "Jane Smith".to_string());
+        checked_out_book.check_out(14);
+        assert!(checked_out_book.display_status().contains("is checked out. Days until due: 14"));
 
-    //     let mut being_read_book = Book::new("Rust in Action".to_string(), "Tim McNamara".to_string());
-    //     being_read_book.mark_as_being_read();
-    //     assert_eq!(being_read_book.display_status(), "Rust in Action is currently being read.");
+        let mut being_read_book = Book::new("Rust in Action".to_string(), "Tim McNamara".to_string());
+        being_read_book.mark_as_being_read();
+        assert_eq!(being_read_book.display_status(), "Rust in Action is currently being read.");
 
-    //     let mut in_repair_book = Book::new("Programming Rust".to_string(), "Jim Blandy".to_string());
-    //     in_repair_book.send_for_repair("Broken spine".to_string());
-    //     assert!(in_repair_book.display_status().contains("is in repair. Notes: Broken spine"));
+        let mut in_repair_book = Book::new("Programming Rust".to_string(), "Jim Blandy".to_string());
+        in_repair_book.send_for_repair("Broken spine".to_string());
+        assert!(in_repair_book.display_status().contains("is in repair. Notes: Broken spine"));
 
-    //     let lost_book = Book {
-    //         title: "Zero To Production In Rust".to_string(),
-    //         author: "Luca Palmieri".to_string(),
-    //         status: BookStatus::Lost,
-    //     };
-    //     assert_eq!(lost_book.display_status(), "Zero To Production In Rust has been reported lost.");
-    // }
+        let lost_book = Book {
+            title: "Zero To Production In Rust".to_string(),
+            author: "Luca Palmieri".to_string(),
+            status: BookStatus::Lost,
+        };
+        assert_eq!(lost_book.display_status(), "Zero To Production In Rust has been reported lost.");
+    }
 }
