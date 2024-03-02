@@ -50,9 +50,6 @@ impl Book {
             BookStatus::BeingRead => format!("{} is currently being read.", self.title),
             BookStatus::InRepair(x) => format!("is in repair. Notes: {}", x),
             BookStatus::Lost => format!("{} has been reported lost.", self.title),
-           
-
-
         }
     }
 }
